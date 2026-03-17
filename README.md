@@ -5,51 +5,51 @@
   <img src="https://img.shields.io/badge/Category-IoT-green?style=for-the-badge" alt="IoT"/>
 </p>
 
-# 🌱 IoT Indoor Plant Environment Monitor
+# ðŸŒ± IoT Indoor Plant Environment Monitor
 
-> An ESP32-based smart plant monitoring system with soil moisture sensing, auto-watering, OLED display, and ThingSpeak cloud dashboard — complete IoT pipeline from sensor to cloud.
+> An ESP32-based smart plant monitoring system with soil moisture sensing, auto-watering, OLED display, and ThingSpeak cloud dashboard â€” complete IoT pipeline from sensor to cloud.
 
 ---
 
-## 🔍 Overview
+## ðŸ” Overview
 
 This project creates a **complete IoT pipeline** for indoor plant health monitoring. It reads environmental data from multiple sensors, evaluates plant health using configurable thresholds, triggers auto-watering when soil is dry, and pushes all data to **ThingSpeak** for cloud visualization and alerting.
 
 ### Key Highlights
-- 🌡️ **4 Sensors** — Soil moisture, temperature, humidity, light
-- 💧 **Auto-Watering** — Pump activates when soil dries out
-- 📺 **OLED Display** — 3-page cycling dashboard (128x64)
-- ☁️ **ThingSpeak Cloud** — Real-time graphs and analytics
-- 🌿 **Plant Health AI** — 6 status levels (Happy → Critical)
-- 🔔 **Audio Alerts** — Buzzer for critical conditions
-- ⏱️ **Watering Cooldown** — 5-minute minimum between watering cycles
+- ðŸŒ¡ï¸ **4 Sensors** â€” Soil moisture, temperature, humidity, light
+- ðŸ’§ **Auto-Watering** â€” Pump activates when soil dries out
+- ðŸ“º **OLED Display** â€” 3-page cycling dashboard (128x64)
+- â˜ï¸ **ThingSpeak Cloud** â€” Real-time graphs and analytics
+- ðŸŒ¿ **Plant Health AI** â€” 6 status levels (Happy â†’ Critical)
+- ðŸ”” **Audio Alerts** â€” Buzzer for critical conditions
+- â±ï¸ **Watering Cooldown** â€” 5-minute minimum between watering cycles
 
 ---
 
-## 🏗️ System Architecture
+## ðŸ—ï¸ System Architecture
 
 ```
-┌──────────────────┐
-│    SENSORS       │
-│  ┌────────────┐  │     ┌─────────────────────┐     ┌───────────────┐
-│  │Soil Moist. ├──┼────►│     ESP32            │────►│  ThingSpeak   │
-│  │DHT22       ├──┤     │                     │     │  Cloud        │
-│  │LDR         ├──┤     │  ┌───────────────┐  │     │  ┌─────────┐  │
-│  └────────────┘  │     │  │Health Evaluator│  │     │  │Dashboard│  │
-└──────────────────┘     │  │  HAPPY         │  │     │  │& Graphs │  │
-                         │  │  NEEDS_WATER   │  │     │  └─────────┘  │
-┌──────────────────┐     │  │  CRITICAL      │  │     └───────────────┘
-│    ACTUATORS     │     │  │  OVERWATERED   │  │
-│  ┌────────────┐  │     │  │  TOO_HOT       │  │     ┌───────────────┐
-│  │Water Pump  ├──┼◄────│  │  TOO_COLD      │  │────►│  OLED Display │
-│  │Buzzer      ├──┤     │  └───────────────┘  │     │  (3 pages)    │
-│  └────────────┘  │     └─────────────────────┘     └───────────────┘
-└──────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚    SENSORS       â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  â”‚Soil Moist. â”œâ”€â”€â”¼â”€â”€â”€â”€â–ºâ”‚     ESP32            â”‚â”€â”€â”€â”€â–ºâ”‚  ThingSpeak   â”‚
+â”‚  â”‚DHT22       â”œâ”€â”€â”¤     â”‚                     â”‚     â”‚  Cloud        â”‚
+â”‚  â”‚LDR         â”œâ”€â”€â”¤     â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚     â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚     â”‚  â”‚Health Evaluatorâ”‚  â”‚     â”‚  â”‚Dashboardâ”‚  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚  â”‚  HAPPY         â”‚  â”‚     â”‚  â”‚& Graphs â”‚  â”‚
+                         â”‚  â”‚  NEEDS_WATER   â”‚  â”‚     â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”‚  â”‚  CRITICAL      â”‚  â”‚     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+â”‚    ACTUATORS     â”‚     â”‚  â”‚  OVERWATERED   â”‚  â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚     â”‚  â”‚  TOO_HOT       â”‚  â”‚     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  â”‚Water Pump  â”œâ”€â”€â”¼â—„â”€â”€â”€â”€â”‚  â”‚  TOO_COLD      â”‚  â”‚â”€â”€â”€â”€â–ºâ”‚  OLED Display â”‚
+â”‚  â”‚Buzzer      â”œâ”€â”€â”¤     â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚     â”‚  (3 pages)    â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
 
-## 🔌 Circuit Connections
+## ðŸ”Œ Circuit Connections
 
 | Component | ESP32 Pin | Description |
 |:---------:|:---------:|:------------|
@@ -64,35 +64,35 @@ This project creates a **complete IoT pipeline** for indoor plant health monitor
 
 ---
 
-## 🌿 Plant Health Assessment
+## ðŸŒ¿ Plant Health Assessment
 
 | Status | Condition | Action |
 |:------:|:----------|:-------|
-| 😊 **Happy** | All normal | None |
-| 💧 **Needs Water** | Soil < 70% | Auto-water + alert |
-| 🚨 **Critical** | Soil < 30% | Urgent water + alarm |
-| 🌊 **Overwatered** | Soil > 85% | Warning alert |
-| 🔥 **Too Hot** | Temp > 35°C | Alert |
-| 🥶 **Too Cold** | Temp < 10°C | Alert |
+| ðŸ˜Š **Happy** | All normal | None |
+| ðŸ’§ **Needs Water** | Soil < 70% | Auto-water + alert |
+| ðŸš¨ **Critical** | Soil < 30% | Urgent water + alarm |
+| ðŸŒŠ **Overwatered** | Soil > 85% | Warning alert |
+| ðŸ”¥ **Too Hot** | Temp > 35Â°C | Alert |
+| ðŸ¥¶ **Too Cold** | Temp < 10Â°C | Alert |
 
 ---
 
-## 📁 File Structure
+## ðŸ“ File Structure
 
 ```
 IoT-Indoor-Plant-Monitor/
-├── src/
-│   └── main.cpp
-├── docs/
-├── platformio.ini
-├── .gitignore
-├── LICENSE
-└── README.md
+â”œâ”€â”€ src/
+â”‚   â””â”€â”€ main.cpp
+â”œâ”€â”€ docs/
+â”œâ”€â”€ platformio.ini
+â”œâ”€â”€ .gitignore
+â”œâ”€â”€ LICENSE
+â””â”€â”€ README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## ðŸš€ Getting Started
 
 ```bash
 git clone https://github.com/HariKrishna0088/IoT-Indoor-Plant-Monitor.git
@@ -108,13 +108,13 @@ pio device monitor
 
 ---
 
-## 👨‍💻 Author
+## ðŸ‘¨â€ðŸ’» Author
 
-**Daggolu Hari Krishna** — B.Tech ECE | JNTUA College of Engineering, Kalikiri
+**Daggolu Hari Krishna** â€” B.Tech ECE | JNTUA College of Engineering, Kalikiri
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/harikrishnadaggolu)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/contacthari88/)
 [![GitHub](https://img.shields.io/badge/GitHub-HariKrishna0088-black?style=flat-square&logo=github)](https://github.com/HariKrishna0088)
 
 ---
 
-<p align="center">⭐ Star this repo if you found it useful! ⭐</p>
+<p align="center">â­ Star this repo if you found it useful! â­</p>
